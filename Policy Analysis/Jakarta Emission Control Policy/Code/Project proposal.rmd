@@ -1,0 +1,569 @@
+---
+title: 'U6614: Final Project Proposal'
+author: ''
+date: '`r Sys.Date()`'
+output:
+  pdf_document:
+    toc: no
+    toc_depth: '3'
+    number_sections: yes
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+    number_sections: yes
+    highlight: tango
+    theme: default
+    fig_caption: yes
+    df_print: tibble
+urlcolor: blue
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+```
+
+
+
+```{r, include = FALSE}
+library(tidyverse)
+library(dplyr)
+library(knitr)
+
+```
+
+# Research Questions and Motivation
+\textcolor{red}{
+What do you hope to learn from the proposed analysis? What are the policy implications of your potential results?
+If you find statistical evidence of an association between X and Y variables, how could that inform public policy?
+}
+
+This research seeks to address three questions concerning the odd-even policy in Jakarta and its impact on air pollution, as below:
+
+1. What was the effect of the 2019 odd-even policy on reducing private car usage in Jakarta?
+2. Is there a discernible correlation between the odd-even policy and the reduction of traffic congestion in specific segments of Jakarta in 2019?
+3. Can we identify a correlation between the odd-even policy and reduced pollution levels in Jakarta during the same year?
+
+The policy was introduced by the Jakarta government as a measure to discourage private car usage, which had been contributing to severe traffic congestion. Addressing these questions will provide insights into the behavioral changes among the population of Jakarta in response to this policy. 
+
+There is a common belief that this policy predominantly only affects lower-income individuals, as wealthier citizens can still acquire new cars with different license numbers. If it is true, this behavior will not only fails to alleviate traffic congestion but also increase the gap between the rich and poor.
+
+Other behaviors we aim to identify is whether those affected by the policy shifted their mode of transportation to public transit or motorcycles. The most socially desirable outcome would be a shift towards public transportation usage. Conversely, a shift to motorcycles not only contributes to increased pollution through less inefficient fuel combustion but also exacerbates traffic issues.
+
+Accurately understanding these behavioral changes is important to provide the government with well-informed recommendations. If the policy successfully encouraged greater public transportation usage, the government should consider further investments in the public transit system. Conversely, if the policy led to increased motorcycle usage, the resulting congestion should be compared to a counterfactual scenario in which the policy was not implemented to determine its true impact. Additionally to this case, we need to also understand the correlation between the rise in the number of motorcycles to pollution levels. If a positive correlation exists, the government should incorporate human health costs when evaluating the cost-benefit of this policy. This information is critical for the current government, particularly due to the adverse health effects experienced by infants as a result of poor air quality.
+
+# Policy Background
+
+\textcolor{red}{
+What policy context should we know?
+What does your “treatment” entail?
+What factors may have contributed to the treatment (in the absence of random assignment)?
+Describe the nature of your policy/treatment variation.
+Some examples: you might be looking at cross-sectional variation between individuals or entities in exposure to a time-invariant policy; time variation shared by all individuals or entities; or differential exposure within entities or subgroups over time.
+}
+
+## Odd-Even Policy Context
+The policy is implemented in several main road of Jakarta with high congestion rate as can be seen on Figure 1 below. Since not all road is subject to this measure, there might be a spillover of traffic to another adjacent road due to people evading the policy. This policy is implemented in the rush hour window of 6AM-10AM and 5PM to 10PM. There might be a possibility of people evading this policy by commuting outside this window. Another thing to consider is that this policy is not enforced to public transportation, electric vehicle, ride hailing car, government car, and motorcycle. 
+
+Counterfactual condition can be assessed by measuring the same variables to the road that is not subject to the policy and also not affected by the spillovers. We can check whether the road is not affected by checking the trend of the traffic in those road before the odd-even policy being implemented. 
+
+![Odd-even policy in 2023](ganjil-genap.jpg){width=50%}
+
+We can also control for the growth of car number growth in overall by including the car number registered in Jakarta. This will reduce the bias to understate the impact of this policy to the traffic. 
+
+## Treatment Variation
+The treatment variable is whether the road is subject to the policy or not, which should made the roads faster to pass through compared to other roads not subject to the policy. Since th odd-even license number is given randomly, there should not be any difference in terms of individual driver's and car's characteristics. 
+
+## Pollution From Transportation Sector
+Pollution measured will be focused on the PM 2.5, since other pollutant (CO2, NOx) might has diverse source compared to transportation sector which we are mainly interested in. PM 2.5 pollution is created from the unfinished combustion of fuel, which often happen in private car and motorcycle. Diesel car and older motorcycle tend to produce greater amount of this polutant. However, the PM 2.5 is not only come from the transportation system. There are other sources of similar pollution like waste burning, industrial combustion, other dust particle. This might create overestimate bias on measuring the correlation between pollution and the congestion. 
+
+# Data Description
+
+## Traffic Data - Average Travel Speed
+The variable that this study uses to approach the monthly traffic data set is the average travel speed in 41 corridors in Jakarta in the morning (6 - 10 a.m.) and in the evening (4 - 9 p.m.). This data set was collected from Open Data Jakarta. The unit of observation is a corridor consisting of several streets. These corridors represent the streets in Jakarta that are affected by the odd-even (OD) policy several months before and after the more stringent OD policy was applied in 2019. Each observation consists of average travel time in minutes in the morning and the afternoon and distance in kilometers (km). The average travel speed in km per hour (km/h) is calculated by dividing the distance and the average travel time over 60 minutes per hour. 
+
+This study categorizes those corridors into 3 categories which are “0” represents corridors without odd-even policy, “1” as corridors where the odd-even policy is applied, “2” as corridors where the stricter (have 2 or more streets affected) odd-even policy is applied. This category will be used as the basis of the empirical method such as difference in difference and fixed effects that this study will use.
+
+
+## Pollution Data - Ground Level PM 2.5
+Pollution data is sourced from Washington University in St. Louis. This data is an estimation of ground-level particulate matter by processing satellite data through a chemical model. The result then is calibrated to real observations. The observation unit is monthly for 0.01 degrees grid (which is roughly equal to 1km square in the Jakarta region). The data is in NetCDF format, which is a raster data. This data will be processed in GIS software (ArcGIS) by intersecting with the selected road, which will then be averaged over the area to create a pollution level in the road for every month.
+
+## Public Transportation Data - Ridership
+Public transportation data is sourced from the PT Transjakarta data and the Jakarta Open Data. The public transportation data that we observed is the public transportation that is provided by PT Transjakarta, which is the state-owned enterprise that provides the largest number of public transportation fleets in the country. The data is a report of passenger data that includes the number of passengers per month, by type of public transportation modes, and by routes. The unit of observation is a monthly number of passengers by mode and routes. The data is in CSV format, separated into 12 CSV files representing the monthly data. The data will be processed to 
+
+
+## Car Registration Data
+This data is sourced from the police. This data contained the number of cars registered in the Metrojaya Police (police department handling the Jakarta and surrounding area) database every month. The data is gathered from every time a car/motorcycle is acquired and given a license number.
+
+The unit of observation is Jakarta every year, with the population of Jakarta over time. This data will then be 
+
+
+# Preliminary Exploratory Analysis
+
+## Congestion Data
+```{r, include=FALSE}
+
+#data set of 41 congested streets in Jakarta
+January <- read.csv("Data Set/January_2019.csv") %>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "1",
+         id = cur_group_rows())
+
+
+February <- read.csv("Data Set/February_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "2",
+         id = cur_group_rows())
+
+March <- read.csv("Data Set/March_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "3",
+         id = cur_group_rows())
+
+April <- read.csv("Data Set/April_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_Waktu_tempuh) %>% 
+  mutate(month = "4",
+         id = cur_group_rows())
+
+May <- read.csv("Data Set/May_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "5",
+         id = cur_group_rows())
+
+June <- read.csv("Data Set/June_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "6",
+         id = cur_group_rows())
+
+July <- read.csv("Data Set/July_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "7",
+         id = cur_group_rows())
+
+August <- read.csv("Data Set/August_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "8",
+         id = cur_group_rows())
+
+September <- read.csv("Data Set/September_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "9",
+         id = cur_group_rows())
+
+October <- read.csv("Data Set/October_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "10",
+         id = cur_group_rows())
+
+November <- read.csv("Data Set/November_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "11",
+         id = cur_group_rows())
+
+December <- read.csv("Data Set/December_2019.csv")%>% 
+  select(-target_kecepatan, -target_waktu_tempuh, -pencapaian_kecepatan, -pencapaian_kecepatan_per_koridor) %>% 
+  rename(time = waktu,
+         direction = arah,
+         corridor = koridor,
+         distance = jarak,
+         travel_time = pencapaian_waktu_tempuh) %>% 
+  mutate(month = "12",
+         id = cur_group_rows())
+
+#read the category of the streets
+od_code <- read.csv("Data Set/OD COde.csv", head = TRUE, sep = ";") %>% 
+  select(-target_kecepatan, -arah, -waktu, -jarak, -target_waktu_tempuh, -pencapaian_kecepatan_per_koridor, -pencapaian_kecepatan, -pencapaian_waktu_tempuh) %>% 
+  rename(od_code = gage,
+         corridor_ = koridor) %>% 
+  mutate(id = cur_group_rows())
+  
+
+
+
+#bind and join
+congestion_jkt <- rbind(January, February, March, 
+                        April, May, June, July, 
+                        August, September, October, 
+                        November, December) %>% 
+  mutate(avg_speed = distance/(travel_time/60)) %>% 
+  na.omit() %>% 
+  inner_join(od_code, by = c("id")) %>% 
+  select(-corridor_)
+  
+  
+
+str(congestion_jkt)
+summary(congestion_jkt)
+
+#before and after
+clean_cng_jkt <- congestion_jkt %>% 
+  mutate(before = ifelse(od_code > 0 &  od_code < 3, 1, 0),
+         after = od_code) %>% 
+  select(-od_code)
+
+```
+
+```{r, include=FALSE}
+#EDA
+clean_cng_jkt  %>% 
+  group_by(as.numeric(month)) %>% 
+  summarise(monthly_avg_speed = mean(avg_speed))
+
+
+eda_cng_jkt <- clean_cng_jkt  %>% 
+  mutate(month = month.abb[as.numeric(month)],
+         after = as.factor(after)) %>% 
+  group_by(month, after, before) %>% 
+  summarise(monthly_avg_speed = mean(avg_speed))
+
+
+eda_cng_jkt <- clean_cng_jkt  %>% 
+  mutate(month = as.numeric(month),
+         after = as.factor(after)) %>% 
+  group_by(month, after, before) %>% 
+  summarise(monthly_avg_speed = mean(avg_speed))
+```
+
+```{r, echo=TRUE}
+
+#Scatterplot
+ggplot(eda_cng_jkt, 
+       aes(x = month, y = monthly_avg_speed)) + 
+  geom_line(aes (color = after)) + 
+  scale_x_discrete(limits = month.abb) +
+  xlab("Month") +
+  ggtitle("Time series plot of monthly average speed") +
+  ylab("Average speed") +
+  labs(color ="after") +
+  scale_color_brewer(palette = "Set2")
+```
+
+```{r, echo=FALSE}
+month_order <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+
+cng_summary_month <- clean_cng_jkt %>%
+  mutate(month = factor(month, levels = month_order)) %>% 
+  group_by(month) %>%
+  select(-time, -direction, -corridor, -id, -before, -after, -distance, -travel_time) %>%
+  summarise_all(list(
+    'Monthly Average Speed' = ~mean(avg_speed),
+    SD = ~sd(avg_speed)
+  )) %>%
+  mutate(across(where(is.numeric), ~round(., 2))) %>%
+  kable(format = "markdown", align = "c", caption = "Summary by Month") 
+
+print(cng_summary_month)
+```
+
+```{r, echo=TRUE}
+month_order <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+
+cng_summary_month <- clean_cng_jkt %>%
+  mutate(month = factor(month, levels = month_order)) %>% 
+  group_by(month) %>%
+  select(-time, -direction, -corridor, -id, -before, -after, -distance, -travel_time) %>%
+  summarise_all(list(
+    'Monthly Average Speed' = ~mean(avg_speed),
+    SD = ~sd(avg_speed)
+  )) %>%
+  mutate(across(where(is.numeric), ~round(., 2))) %>%
+  kable(format = "markdown", align = "c", caption = "Summary by Month") 
+
+print(cng_summary_month)
+```
+
+# Preliminary Exploratory Analysis
+
+## Public Transportation Data 
+```{r, include=FALSE}
+#data set of monthly passengers of transjakarta
+January <- read.csv("tj data/1_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "1",
+         id = cur_group_rows())
+
+February <- read.csv("tj data/2_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "2",
+         id = cur_group_rows())
+
+March <- read.csv("tj data/3_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "3",
+         id = cur_group_rows())
+
+April <- read.csv("tj data/4_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "4",
+         id = cur_group_rows())
+
+May <- read.csv("tj data/5_tj.csv") %>% 
+  select(-X) %>%
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "5",
+         id = cur_group_rows())
+
+June <- read.csv("tj data/6_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "6",
+         id = cur_group_rows())
+
+July <- read.csv("tj data/7_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "7",
+         id = cur_group_rows())
+
+August <- read.csv("tj data/8_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "8",
+         id = cur_group_rows())
+
+September <- read.csv("tj data/9_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "9",
+         id = cur_group_rows())
+
+October <- read.csv("tj data/10_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "10",
+         id = cur_group_rows())
+
+November <- read.csv("tj data/11_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "11",
+         id = cur_group_rows())
+
+December <- read.csv("tj data/12_tj.csv") %>% 
+  rename(type = jenis,
+         code = kode_trayek,
+         corridor = trayek,
+         passenger = jumlah_penumpang) %>% 
+  group_by(corridor) %>% 
+  mutate(month = "12",
+         id = cur_group_rows())
+
+
+
+
+#bind
+tj_passenger_data <- rbind(January, February, March, 
+                        April, May, June, July, 
+                        August, September, October, 
+                        November, December)
+
+str(tj_passenger_data)
+
+#cleaning the numerical data and dropping irrelevant modes
+tj_passenger_data$passenger <- gsub("\\.", "", tj_passenger_data$passenger)
+
+tj_passenger_clean <- tj_passenger_data %>%
+  filter(!is.na(code) & code != "")
+
+tj_passenger_clean_F <- tj_passenger_clean %>%
+  filter(type != "LAMPIRAN RINCIAN GRATIS GATE NON BRT" & type != "ANGKUTAN WISATA" & 
+           type != "LAMPIRAN LAYANAN GRATIS BRT")
+
+tj_passenger_clean_F$passenger <- as.numeric(tj_passenger_clean_F$passenger)
+tj_passenger_clean_F$month <- as.factor(tj_passenger_clean_F$month)
+tj_passenger_clean_F$type <- as.factor(tj_passenger_clean_F$type)
+
+month_order <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+```
+
+```{r, echo=FALSE}
+#create summary table for monthly data
+tj_summary_month <- tj_passenger_clean_F %>%
+  mutate(month = factor(month, levels = month_order)) %>%
+  group_by(month) %>%
+  select_if(is.numeric) %>%
+  select(-id) %>%
+  summarise_all(list(
+    Mean = ~mean(.),
+    SD = ~sd(.)
+  ))  %>%
+  mutate(across(where(is.numeric), ~round(., 2))) %>%
+  kable(format = "markdown", align = "c", caption = "Summary by Month") 
+print(tj_summary_month)
+
+#create summary table for mode type data
+tj_summary_type <- tj_passenger_clean_F %>%
+  group_by(type) %>%
+  select_if(is.numeric) %>%
+  select(-id) %>%
+  summarise_all(list(
+    Mean = ~mean(., na.rm = TRUE),
+    SD = ~sd(., na.rm = TRUE)
+  )) %>%
+  mutate(across(where(is.numeric), ~round(., 2))) %>%
+  kable(format = "markdown", align = "c", caption = "Summary by Type") 
+
+print(tj_summary_type)
+
+#create summary table for per corridor data
+tj_summary_corr <- tj_passenger_clean_F %>%
+  group_by(corridor) %>%
+  select_if(is.numeric) %>%
+  select(-id) %>%
+  summarise_all(list(
+    Mean = ~mean(., na.rm = TRUE),
+    SD = ~sd(., na.rm = TRUE)
+  )) %>%
+  mutate(across(where(is.numeric), ~round(., 2))) %>%
+  kable(format = "markdown", align = "c", caption = "Summary by Corridor") 
+
+print(tj_summary_corr)
+
+#plotting the average passenger per month data
+avg_pass <- tj_passenger_clean_F %>%
+  mutate(month = factor(month, levels = month_order)) %>%
+  group_by(month) %>%
+  summarise(avg_pass = mean(passenger, na.rm = TRUE))
+
+ggplot(data = avg_pass, 
+       aes(x = month, y = avg_pass)) + 
+  geom_col() + 
+  ggtitle("Average Number of Passengers per Month") +
+  xlab("Month") +
+  ylab("Average Number of Passengers") + 
+  scale_y_continuous(labels = scales::comma_format(scale = 1e-3, suffix = "K"))
+
+# plotting the passenger per mode
+mode_avg <- tj_passenger_clean_F %>%
+  group_by(type) %>%
+  summarise(mode_avg = mean(passenger, na.rm = TRUE))
+
+ggplot(data = mode_avg, 
+       aes(x = type, y = mode_avg)) + 
+  geom_col() + 
+  ggtitle("Average Number of Passengers by Public Transportation Type") +
+  xlab("Type of Public Transportation Mode") +
+  ylab("Average Number of Passengers") + 
+  scale_y_continuous(labels = scales::comma_format(scale = 1e-3, suffix = "K")) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+## Pollution Data
+The data has been converted into raster data in ArcGIS, but still in the process of converting it into csv format for input in R by interesting it into each buffered road polygon. The road polygon used obtained from OpenStreetMap Indonesia which contains all roads in Jakarta region. The pollution in each road is defined as the mean of PM 2.5 level passed through by each road.Raster data of the PM 2.5 level in Jakarta can be seen in Appendix, starting from January at upper left image to December at bottom right image. Next step to do is to assign this pollution mean to the road data in R.
+
+# Empirical Strategy
+This research will use a difference-in-difference approach to explain the average travel speed in selected roads.
+The PRF can be seen below.
+\begin{equation}
+avg_speed = beta_0 + beta_1 before + beta_2 after + beta_3 before x after
+\end{equation}
+
+# Appendix
+![Pollution in January](01-2019.png){width=50%}
+![Pollution in February](02-2019.png){width=50%}
+![Pollution in March](03-2019.png){width=50%}
+![Pollution in April](04-2019.png){width=50%}
+![Pollution in May](05-2019.png){width=50%}
+![Pollution in June](06-2019.png){width=50%}
+![Pollution in July](07-2019.png){width=50%}
+![Pollution in August](08-2019.png){width=50%}
+![Pollution in September](09-2019.png){width=50%}
+![Pollution in October](10-2019.png){width=50%}
+![Pollution in November](11-2019.png){width=50%}
+![Pollution in December](12-2019.png){width=50%}
+

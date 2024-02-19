@@ -1,0 +1,1578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document id="root_doc">
+    <name>Ganjil Genap (GaGe) Jakarta 2023</name>
+    <description><![CDATA[Updated: 12 Juli 2023, 15:28 WIB.<br><br>Tools ini merupakan gambaran peta GaGe Jakarta yang dapat terintegrasi dengan Google Maps. Karena kita, sudah familiar dengan Google Maps diharapkan tools ini memudahkan pengguna jalan Jakarta untuk mengetahui jalan mana saja yang berlaku GaGe.<br><br>GaGe Jakarta berlaku setiap hari pukul 06:00 s/d 10:00 WIB dan pukul 16:00 s/d 21:00 WIB, kecuali hari Sabtu, Minggu, dan Libur Nasional.<br><br>Jakarta memberlakukan Ganjil Genap di 25 Ruas Jalan Raya dan 28 Gerbang Tol termasuk Off Ramp (Jalan raya setelah exit tol).<br>28 Gerbang Tol termasuk Off ramp ini merupakan dampak diberlakukannya Ganjil Genap pada 25 Ruas Jalan Raya.<br><br>Notes:<br>Tools ini diupdate secara berkala jika ada perkembangan terbaru terhadap ruas jalan GaGe yang ada di Jakarta.<br>Jika maps ini belum update mohon infokan ke saya ya, saya usahakan segera lakukan update. Thank you.<br><br>==========<br><br>Contact Me:<br>Created by Welly S.<br>IG: wellys3<br>Email: welly.sugiarto@yahoo.com / welly.sugiarto3@gmail.com<br>Website: linktr.ee/syllewtraigus]]></description>
+    <Style id="icon-1653-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1653-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1653-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1653-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1653-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1653-FF5252-normal">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1653-FF5252-highlight">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1653-FF5252">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1653-FF5252-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1653-FF5252-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-0097A7-12431-nodesc-normal">
+      <LineStyle>
+        <color>ffa79700</color>
+        <width>12.431</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-0097A7-12431-nodesc-highlight">
+      <LineStyle>
+        <color>ffa79700</color>
+        <width>18.6465</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-0097A7-12431-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0097A7-12431-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0097A7-12431-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-0097A7-15531-nodesc-normal">
+      <LineStyle>
+        <color>ffa79700</color>
+        <width>15.531</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-0097A7-15531-nodesc-highlight">
+      <LineStyle>
+        <color>ffa79700</color>
+        <width>23.2965</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-0097A7-15531-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0097A7-15531-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0097A7-15531-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-097138-17663-nodesc-normal">
+      <LineStyle>
+        <color>ff387109</color>
+        <width>17.663</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-097138-17663-nodesc-highlight">
+      <LineStyle>
+        <color>ff387109</color>
+        <width>26.4945</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-097138-17663-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-097138-17663-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-097138-17663-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-097138-9719-nodesc-normal">
+      <LineStyle>
+        <color>ff387109</color>
+        <width>9.719</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-097138-9719-nodesc-highlight">
+      <LineStyle>
+        <color>ff387109</color>
+        <width>14.5785</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-097138-9719-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-097138-9719-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-097138-9719-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-0F9D58-19019-nodesc-normal">
+      <LineStyle>
+        <color>ff589d0f</color>
+        <width>19.019</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-0F9D58-19019-nodesc-highlight">
+      <LineStyle>
+        <color>ff589d0f</color>
+        <width>28.5285</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-0F9D58-19019-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0F9D58-19019-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0F9D58-19019-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-673AB7-15338-nodesc-normal">
+      <LineStyle>
+        <color>ffb73a67</color>
+        <width>15.338</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-673AB7-15338-nodesc-highlight">
+      <LineStyle>
+        <color>ffb73a67</color>
+        <width>23.007</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-673AB7-15338-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-673AB7-15338-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-673AB7-15338-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-7CB342-12819-nodesc-normal">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>12.819</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-7CB342-12819-nodesc-highlight">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>19.2285</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-7CB342-12819-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-7CB342-12819-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-7CB342-12819-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-7CB342-14369-nodesc-normal">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>14.369</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-7CB342-14369-nodesc-highlight">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>21.5535</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-7CB342-14369-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-7CB342-14369-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-7CB342-14369-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-7CB342-16694-nodesc-normal">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>16.694</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-7CB342-16694-nodesc-highlight">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>25.041</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-7CB342-16694-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-7CB342-16694-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-7CB342-16694-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-817717-15919-nodesc-normal">
+      <LineStyle>
+        <color>ff177781</color>
+        <width>15.919</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-817717-15919-nodesc-highlight">
+      <LineStyle>
+        <color>ff177781</color>
+        <width>23.8785</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-817717-15919-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-817717-15919-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-817717-15919-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-87CEAC-15919-nodesc-normal">
+      <LineStyle>
+        <color>ffacce87</color>
+        <width>15.919</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-87CEAC-15919-nodesc-highlight">
+      <LineStyle>
+        <color>ffacce87</color>
+        <width>23.8785</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-87CEAC-15919-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-87CEAC-15919-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-87CEAC-15919-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-880E4F-17275-nodesc-normal">
+      <LineStyle>
+        <color>ff4f0e88</color>
+        <width>17.275</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-880E4F-17275-nodesc-highlight">
+      <LineStyle>
+        <color>ff4f0e88</color>
+        <width>25.9125</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-880E4F-17275-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-880E4F-17275-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-880E4F-17275-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-9FA8DA-20956-nodesc-normal">
+      <LineStyle>
+        <color>ffdaa89f</color>
+        <width>20.956</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-9FA8DA-20956-nodesc-highlight">
+      <LineStyle>
+        <color>ffdaa89f</color>
+        <width>31.434</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-9FA8DA-20956-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-9FA8DA-20956-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-9FA8DA-20956-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-9FA8DA-21150-nodesc-normal">
+      <LineStyle>
+        <color>ffdaa89f</color>
+        <width>21.15</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-9FA8DA-21150-nodesc-highlight">
+      <LineStyle>
+        <color>ffdaa89f</color>
+        <width>31.725</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-9FA8DA-21150-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-9FA8DA-21150-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-9FA8DA-21150-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-BDBDBD-18050-nodesc-normal">
+      <LineStyle>
+        <color>ffbdbdbd</color>
+        <width>18.05</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-BDBDBD-18050-nodesc-highlight">
+      <LineStyle>
+        <color>ffbdbdbd</color>
+        <width>27.075</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-BDBDBD-18050-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-BDBDBD-18050-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-BDBDBD-18050-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-CE93D8-10881-nodesc-normal">
+      <LineStyle>
+        <color>ffd893ce</color>
+        <width>10.881</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-CE93D8-10881-nodesc-highlight">
+      <LineStyle>
+        <color>ffd893ce</color>
+        <width>16.3215</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-CE93D8-10881-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-CE93D8-10881-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-CE93D8-10881-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-CE93D8-20569-nodesc-normal">
+      <LineStyle>
+        <color>ffd893ce</color>
+        <width>20.569</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-CE93D8-20569-nodesc-highlight">
+      <LineStyle>
+        <color>ffd893ce</color>
+        <width>30.8535</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-CE93D8-20569-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-CE93D8-20569-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-CE93D8-20569-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-E65100-17081-nodesc-normal">
+      <LineStyle>
+        <color>ff0051e6</color>
+        <width>17.081</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-E65100-17081-nodesc-highlight">
+      <LineStyle>
+        <color>ff0051e6</color>
+        <width>25.6215</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-E65100-17081-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-E65100-17081-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-E65100-17081-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-E65100-18050-nodesc-normal">
+      <LineStyle>
+        <color>ff0051e6</color>
+        <width>18.05</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-E65100-18050-nodesc-highlight">
+      <LineStyle>
+        <color>ff0051e6</color>
+        <width>27.075</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-E65100-18050-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-E65100-18050-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-E65100-18050-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-E65100-19794-nodesc-normal">
+      <LineStyle>
+        <color>ff0051e6</color>
+        <width>19.794</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-E65100-19794-nodesc-highlight">
+      <LineStyle>
+        <color>ff0051e6</color>
+        <width>29.691</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-E65100-19794-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-E65100-19794-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-E65100-19794-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-EDA29B-16113-nodesc-normal">
+      <LineStyle>
+        <color>ff9ba2ed</color>
+        <width>16.113</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-EDA29B-16113-nodesc-highlight">
+      <LineStyle>
+        <color>ff9ba2ed</color>
+        <width>24.1695</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-EDA29B-16113-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-EDA29B-16113-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-EDA29B-16113-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-F48FB1-20956-nodesc-normal">
+      <LineStyle>
+        <color>ffb18ff4</color>
+        <width>20.956</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-F48FB1-20956-nodesc-highlight">
+      <LineStyle>
+        <color>ffb18ff4</color>
+        <width>31.434</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-F48FB1-20956-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-F48FB1-20956-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-F48FB1-20956-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-F57C00-21538-nodesc-normal">
+      <LineStyle>
+        <color>ff007cf5</color>
+        <width>21.538</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-F57C00-21538-nodesc-highlight">
+      <LineStyle>
+        <color>ff007cf5</color>
+        <width>32.307</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-F57C00-21538-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-F57C00-21538-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-F57C00-21538-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-F9A825-16306-nodesc-normal">
+      <LineStyle>
+        <color>ff25a8f9</color>
+        <width>16.306</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-F9A825-16306-nodesc-highlight">
+      <LineStyle>
+        <color>ff25a8f9</color>
+        <width>24.459</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-F9A825-16306-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-F9A825-16306-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-F9A825-16306-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FF5252-17081-nodesc-normal">
+      <LineStyle>
+        <color>ff5252ff</color>
+        <width>17.081</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-FF5252-17081-nodesc-highlight">
+      <LineStyle>
+        <color>ff5252ff</color>
+        <width>25.6215</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-FF5252-17081-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FF5252-17081-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FF5252-17081-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FFEA00-18050-nodesc-normal">
+      <LineStyle>
+        <color>ff00eaff</color>
+        <width>18.05</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-FFEA00-18050-nodesc-highlight">
+      <LineStyle>
+        <color>ff00eaff</color>
+        <width>27.075</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-FFEA00-18050-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FFEA00-18050-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FFEA00-18050-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Schema id="_5_Ruas_Jalan_GaGe_Jakarta.schema">
+      <SimpleField name="gage" type="string"/>
+    </Schema>
+    <Folder>
+      <name>25 Ruas Jalan GaGe Jakarta</name>
+      <Placemark>
+        <name>1. Jl. Thamrin
+</name>
+        <styleUrl>#line-817717-15919-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8229009,-6.1806326,0
+            106.8229438,-6.181358,0
+            106.8229651,-6.1833472,0
+            106.8229008,-6.1863871,0
+            106.8230081,-6.1942055,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>2. Jl. Sudirman
+</name>
+        <styleUrl>#line-E65100-17081-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8230528,-6.1956985,0
+            106.8230528,-6.1995383,0
+            106.8227953,-6.203634,0
+            106.8222803,-6.2067059,0
+            106.821422,-6.2106309,0
+            106.819877,-6.2130201,0
+            106.8164438,-6.2160918,0
+            106.8122381,-6.2196755,0
+            106.8083757,-6.2220646,0
+            106.8032795,-6.2261815,0
+            106.7998034,-6.2288692,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>3. Jl. Sisingamangaraja
+</name>
+        <styleUrl>#line-F9A825-16306-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.7993049,-6.2294856,0
+            106.7990474,-6.2299469,0
+            106.7988543,-6.2303975,0
+            106.7986505,-6.2308934,0
+            106.7985539,-6.2314107,0
+            106.7984574,-6.2320026,0
+            106.7984681,-6.2326692,0
+            106.7984681,-6.2343544,0
+            106.7984895,-6.2369354,0
+            106.798511,-6.239751,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>4. Jl. Panglima Polim
+</name>
+        <styleUrl>#line-0097A7-15531-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.7985449,-6.2402966,0
+            106.7984607,-6.2424757,0
+            106.798171,-6.243233,0
+            106.7981174,-6.2439689,0
+            106.7981227,-6.2447688,0
+            106.7980128,-6.2460539,0
+            106.7978706,-6.2471258,0
+            106.797758,-6.247755,0
+            106.7973664,-6.2519037,0
+            106.7971732,-6.2560524,0
+            106.7971089,-6.2567883,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>5. Jl. Fatmawati
+</name>
+        <styleUrl>#line-FFEA00-18050-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.7970361,-6.2568456,0
+            106.7968215,-6.2593198,0
+            106.7966176,-6.2613568,0
+            106.7966176,-6.2620607,0
+            106.7969288,-6.2629352,0
+            106.7973365,-6.2643003,0
+            106.7973365,-6.2669025,0
+            106.7972828,-6.2686408,0
+            106.7974116,-6.2702512,0
+            106.7977012,-6.2741545,0
+            106.7976369,-6.2771299,0
+            106.7964996,-6.2809371,0
+            106.7960597,-6.2821848,0
+            106.7959846,-6.2837312,0
+            106.7956735,-6.2862053,0
+            106.7953838,-6.2880182,0
+            106.7953731,-6.2897885,0
+            106.7951907,-6.2909296,0
+            106.7952551,-6.292028,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>6. Jl. Tomang
+</name>
+        <styleUrl>#line-EDA29B-16113-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8085772,-6.171447,0
+            106.8068176,-6.1725323,0
+            106.804468,-6.174271,0
+            106.8024617,-6.175359,0
+            106.7989856,-6.177855,0
+            106.797269,-6.1788789,0
+            106.7963571,-6.179351,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>7. Jl. S. Parman
+</name>
+        <styleUrl>#line-BDBDBD-18050-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.800002,-6.2020048,0
+            106.7990464,-6.2000162,0
+            106.7983268,-6.197793,0
+            106.7980341,-6.196468,0
+            106.7979131,-6.1951431,0
+            106.7976067,-6.1924506,0
+            106.7973157,-6.1862975,0
+            106.79725,-6.1830989,0
+            106.7970921,-6.1814386,0
+            106.7969828,-6.1808858,0
+            106.7968279,-6.180333,0
+            106.7967008,-6.1799365,0
+            106.7964558,-6.1794601,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>8. Jl. Gatot Subroto
+</name>
+        <styleUrl>#line-0F9D58-19019-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.7995772,-6.2013757,0
+            106.8011221,-6.2048315,0
+            106.8031392,-6.2073914,0
+            106.8057141,-6.2105485,0
+            106.8087181,-6.2137909,0
+            106.8096623,-6.2156681,0
+            106.8118939,-6.2189531,0
+            106.8142113,-6.2221955,0
+            106.8191037,-6.2292347,0
+            106.8218073,-6.2332449,0
+            106.8268713,-6.2364872,0
+            106.8300697,-6.2385471,0
+            106.8334399,-6.2406069,0
+            106.843356,-6.2432761,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>9. Jl. M.T. Haryono
+</name>
+        <styleUrl>#line-E65100-18050-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8748349,-6.2472401,0
+            106.8714017,-6.245747,0
+            106.8655223,-6.2435713,0
+            106.8640632,-6.2430593,0
+            106.8609304,-6.243102,0
+            106.8528623,-6.24323,0
+            106.8470687,-6.2434433,0
+            106.8438071,-6.243358,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>10. Jl. Rasuna Said
+</name>
+        <styleUrl>#line-CE93D8-20569-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8293916,-6.2069504,0
+            106.829853,-6.2078623,0
+            106.8306477,-6.210444,0
+            106.8307335,-6.2136864,0
+            106.8307335,-6.2165875,0
+            106.8314202,-6.2194885,0
+            106.8321927,-6.222219,0
+            106.8327935,-6.2252906,0
+            106.8332226,-6.2281064,0
+            106.8332226,-6.2306661,0
+            106.8326218,-6.2322019,0
+            106.830991,-6.2339937,0
+            106.8288453,-6.2349322,0
+            106.8275364,-6.2365747,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>11. Jl. D.I. Panjaitan
+</name>
+        <styleUrl>#line-7CB342-16694-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8743032,-6.2152933,0
+            106.8745011,-6.2220424,0
+            106.8747502,-6.2246437,0
+            106.8752354,-6.2271597,0
+            106.8760722,-6.230594,0
+            106.8768983,-6.2341242,0
+            106.8778425,-6.2374732,0
+            106.8780785,-6.239105,0
+            106.8777674,-6.240982,0
+            106.876834,-6.2430937,0
+            106.8756967,-6.2452375,0
+            106.8749564,-6.2472852,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>12. Jl. A. Yani
+</name>
+        <styleUrl>#line-9FA8DA-20956-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.874325,-6.2151333,0
+            106.8740461,-6.2097898,0
+            106.873971,-6.2065473,0
+            106.8735203,-6.2036888,0
+            106.8732629,-6.2019183,0
+            106.8737778,-6.1991238,0
+            106.8747863,-6.19426,0
+            106.875237,-6.1919561,0
+            106.8760953,-6.1778338,0
+            106.8762669,-6.1751672,0
+            106.8789062,-6.1665272,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>13. Jl. Gunung Sahari
+</name>
+        <styleUrl>#line-87CEAC-15919-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.830866,-6.1306925,0
+            106.832132,-6.1362716,0
+            106.8327542,-6.1385757,0
+            106.8335696,-6.1422346,0
+            106.8341704,-6.1450187,0
+            106.8343743,-6.1460001,0
+            106.8342992,-6.1469388,0
+            106.8344279,-6.1481015,0
+            106.8353935,-6.1516004,0
+            106.8377431,-6.1609659,0
+            106.8406184,-6.171878,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>14. Jl. Pintu Besar Selatan</name>
+        <styleUrl>#line-880E4F-17275-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8137773,-6.1386004,0
+            106.8140992,-6.1397632,0
+            106.8143889,-6.1405739,0
+            106.8146571,-6.1415659,0
+            106.8148931,-6.1424193,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>15. Jl. Gajah Mada</name>
+        <styleUrl>#line-0097A7-12431-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8148337,-6.142676,0
+            106.8157778,-6.1461749,0
+            106.8163571,-6.1483937,0
+            106.8166575,-6.1499511,0
+            106.8170009,-6.1515085,0
+            106.8174086,-6.1530872,0
+            106.818739,-6.1595087,0
+            106.8205629,-6.1674661,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>16. Jl. Hayam Wuruk</name>
+        <styleUrl>#line-CE93D8-10881-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8152166,-6.1426468,0
+            106.8160105,-6.1457403,0
+            106.8167187,-6.1486418,0
+            106.8172122,-6.1508605,0
+            106.8178559,-6.1537193,0
+            106.8188858,-6.1586047,0
+            106.8209672,-6.1673088,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>17. Jl. Kyai Caringin</name>
+        <styleUrl>#line-673AB7-15338-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8087205,-6.1714283,0
+            106.8097156,-6.171223,0
+            106.8107349,-6.1710737,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>18. Jl. Balikpapan</name>
+        <styleUrl>#line-F48FB1-20956-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8111057,-6.1709893,0
+            106.8128438,-6.1706587,0
+            106.8139059,-6.1704986,0
+            106.8146891,-6.1703813,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>19. Jl. Suryopranoto</name>
+        <styleUrl>#line-FF5252-17081-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8149308,-6.1703494,0
+            106.8173662,-6.1699867,0
+            106.8187073,-6.1696027,0
+            106.8192009,-6.1693894,0
+            106.8197051,-6.168856,0
+            106.8203703,-6.168184,0
+            106.8206814,-6.167832,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>20. Jl. Pramuka</name>
+        <styleUrl>#line-097138-9719-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8541125,-6.1989601,0
+            106.8552819,-6.1981068,0
+            106.856623,-6.1972534,0
+            106.8582538,-6.1961015,0
+            106.8603781,-6.1946509,0
+            106.8626955,-6.1932856,0
+            106.8650773,-6.192475,0
+            106.8687169,-6.1922186,0
+            106.8713429,-6.192027,0
+            106.873242,-6.1919417,0
+            106.8746582,-6.1922616,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>21. Jl. Salemba Raya Timur</name>
+        <styleUrl>#line-7CB342-14369-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8487721,-6.192495,0
+            106.8491449,-6.193199,0
+            106.8495526,-6.194015,0
+            106.8497993,-6.1944842,0
+            106.8499763,-6.1947935,0
+            106.850132,-6.1950922,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>21. Jl. Salemba Raya Barat</name>
+        <styleUrl>#line-7CB342-12819-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8483218,-6.1926771,0
+            106.8487026,-6.1934078,0
+            106.8497433,-6.1952904,0
+            106.8512642,-6.1972823,0
+            106.8523236,-6.1982289,0
+            106.8535628,-6.1993808,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>22. Jl. Kramat Raya</name>
+        <styleUrl>#line-E65100-19794-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8421966,-6.1787978,0
+            106.8427277,-6.1808405,0
+            106.8430281,-6.1822911,0
+            106.8433286,-6.1832298,0
+            106.8438864,-6.1841471,0
+            106.8442753,-6.1847471,0
+            106.844616,-6.185363,0
+            106.8454528,-6.1869843,0
+            106.8462468,-6.1885203,0
+            106.8475342,-6.1907389,0
+            106.8484354,-6.1923842,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>23. Jl. St. Senen</name>
+        <styleUrl>#line-F57C00-21538-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8405788,-6.1719842,0
+            106.8408684,-6.1728696,0
+            106.8410509,-6.1737549,0
+            106.8413942,-6.1752056,0
+            106.8416355,-6.1760909,0
+            106.8418501,-6.1770829,0
+            106.8420164,-6.1781442,0
+            106.842054,-6.1784642,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>24. Jl. Majapahit</name>
+        <styleUrl>#line-097138-17663-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8209909,-6.1677183,0
+            106.8212484,-6.169105,0
+            106.8214523,-6.1699476,0
+            106.8216239,-6.170513,0
+            106.8220209,-6.1709716,0
+            106.8222784,-6.1711423,0
+            106.8226754,-6.171217,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>25. Jl. Medan Merdeka Barat</name>
+        <styleUrl>#line-9FA8DA-21150-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            106.8227854,-6.171313,0
+            106.8229719,-6.171601,0
+            106.8229598,-6.171953,0
+            106.8229517,-6.1732597,0
+            106.8229356,-6.1742277,0
+            106.8229276,-6.1752943,0
+            106.8228967,-6.1764423,0
+            106.822882,-6.177617,0
+            106.8228605,-6.1789556,0
+            106.822839,-6.1803422,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name><![CDATA[28 Gerbang Tol & Off Ramp GaGe Jakarta]]></name>
+      <Placemark>
+        <name>1. Akses Masuk Tol Jakarta-Tangerang</name>
+        <description>Jalan Anggrek Neli Murni sampai akses masuk Tol Jakarta-Tangerang</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.7961374,-6.180681,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>2. Off Ramp Tol Slipi/Palmerah/Tanah Abang sampai Jalan Brigjen Katamso</name>
+        <description>Off Ramp Tol Slipi/Palmerah/Tanah Abang sampai Jalan Brigjen Katamso</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.797101,-6.1860286,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3. Gerbang Tol Slipi 2</name>
+        <description>Jalan Brigjen Katamso sampai Gerbang Tol Slipi 2</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.7975225,-6.1951863,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4. Off Ramp Tol Tomang/Grogol sampai Jalan Kemanggisan Utama</name>
+        <description>Off Ramp Tol Tomang/Grogol sampai Jalan Kemanggisan Utama</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.7971106,-6.1924677,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5. Gerbang Tol Slipi 1</name>
+        <description>Simpang Jalan Palmerah Utara-Jalan KS Tubun sampai Gerbang Tol Slipi 1=</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.7986012,-6.1998482,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6. Gerbang Tol Pejompongan</name>
+        <description>Jalan Pejompongan Raya sampai Gerbang Tol Pejompongan</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8023909,-6.2061625,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7. Off Ramp Tol Slipi/Palmerah/Tanah Abang sampai akses masuk Jalan Tentara Pelajar</name>
+        <description>Off Ramp Tol Slipi/Palmerah/Tanah Abang sampai akses masuk Jalan Tentara Pelajar</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8055307,-6.2103422,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8. Off Ramp Tol Benhil/Senayan/Kebayoran sampai akses masuk Jalan Gerbang Pemuda</name>
+        <description>Off Ramp Tol Benhil/Senayan/Kebayoran sampai akses masuk Jalan Gerbang Pemuda</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8157227,-6.2244832,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9. Off Ramp Tol Kuningan/Mampang/Menteng sampai simpang Kuningan</name>
+        <description>Off Ramp Tol Kuningan/Mampang/Menteng sampai simpang Kuningan</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8331972,-6.2406037,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10. Gerbang Tol Kuningan 2</name>
+        <description>Jalan Taman Patra sampai Gerbang Tol Kuningan 2</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8351608,-6.2408437,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11. Off Ramp Tol Tebet/Manggarai/Pasar Minggu sampai simpang Pancoran</name>
+        <description>Off Ramp Tol Tebet/Manggarai/Pasar Minggu sampai simpang Pancoran</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8514783,-6.243319,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>12. Gerbang Tol Tebet 1</name>
+        <description>Simpang Pancoran sampai Gerbang Tol Tebet 1</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8410774,-6.2426245,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>13. Gerbang Tol Tebet 2</name>
+        <description>Jalan Tebet Barat Dalam Raya sampai Gerbang Tol Tebet 2</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8498562,-6.2431198,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>14. Off Ramp Tol Tebet/Manggarai/Pasar Minggu sampai Jalan Pancoran Timur II</name>
+        <description>Off Ramp Tol Tebet/Manggarai/Pasar Minggu sampai Jalan Pancoran Timur II</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8515242,-6.2433151,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>15. Off Ramp Tol Cawang/Halim/Kampung Melayu</name>
+        <description>Off Ramp Tol Cawang/Halim/Kampung Melayu sampai simpang Jalan Otto Iskandardinata-Jalan Dewi Sartika</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8742541,-6.2471933,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>16. Gerbang Tol Cawang</name>
+        <description>Simpang Jalan Dewi Sartika-Jalan Otto Iskandardinata sampai Gerbang Tol Cawang</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8601416,-6.2432967,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>17. Off Ramp Tol Halim/Kalimalang</name>
+        <description>Off Ramp Tol Halim/Kalimalang sampai Jalan Inspeksi Saluran Kalimalang</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8745024,-6.2200224,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>18. Gerbang Tol Kebon Nanas</name>
+        <description>Jalan Cipinang Cempedak IV sampai Gerbang Tol Kebon Nanas</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8771159,-6.235401,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>19. Gerbang Tol Pedati</name>
+        <description>Jalan Bekasi Timur Raya sampai Gerbang Tol Pedati</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8749248,-6.2243261,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>20. Off Ramp Tol Pisangan/Jatinegara</name>
+        <description>Off Ramp Tol Pisangan/Jatinegara sampai Jalan Bekasi Barat</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.87496,-6.2262094,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>21. Off Ramp Tol Jatinegara/Klender/Buaran</name>
+        <description>Off Ramp Tol Jatinegara/Klender/Buaran sampai Jalan Bekasi Timur Raya</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8739384,-6.2079349,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>22. Gerbang Tol Jatinegara</name>
+        <description>Jalan Bekasi Barat sampai Gerbang Tol Jatinegara</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.873793,-6.2102555,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>23. Gerbang Tol Rawamangun</name>
+        <description>Simpang Jalan Rawamangun Muka Raya-Jalan Utan Kayu Raya sampai Gerbang Tol Rawamangun</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8734415,-6.2014758,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>24. Off Ramp Tol Rawamangun/Salemba/Pulogadung sampai simpang Jalan Utan Kayu Raya-Jalan Rawamangun Muka Raya</name>
+        <description>Off Ramp Tol Rawamangun/Salemba/Pulogadung sampai simpang Jalan Utan Kayu Raya-Jalan Rawamangun Muka Raya</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8733581,-6.203928,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>25. Off Ramp Tol Rawamangun/Salemba/Pulogadung sampai simpang Jalan H Ten Raya-Jalan Rawasari Selatan</name>
+        <description>Off Ramp Rawamangun/Salemba/Pulogadung sampai simpang Jalan H Ten Raya-Jalan Rawasari Selatan</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8733755,-6.203928,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>26. Gerbang Tol Pulomas</name>
+        <description>Simpang Jalan Rawasari Selatan-Jalan H Ten Raya sampai Gerbang Tol Pulomas</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8754563,-6.1829621,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>27. Off Ramp Tol Cempaka Putih</name>
+        <description>Off Ramp Tol Cempaka Putih/Senen/Pulogadung sampai simpang Jalan Letjend Suprapto-Jalan Perintis Kemerdekaan</description>
+        <styleUrl>#icon-1653-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            106.8759904,-6.1761329,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>28. Gerbang Tol Cempaka Putih</name>
+        <description>Simpang Jalan Pulomas sampai Gerbang Tol Cempaka Putih</description>
+        <styleUrl>#icon-1653-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            106.8771834,-6.172199,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
