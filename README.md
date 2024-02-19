@@ -24,3 +24,4 @@ This space serves as a portfolio of my work, reflecting my commitment to merging
 I am eager to collaborate with like-minded individuals and organizations passionate about making a tangible impact in the energy sector. If sustainable energy, policy analysis, or data analytics align with your interests, I welcome the opportunity to connect.
 
 Thank you for visiting my GitHub. I am excited to share my journey and contribute to our collective efforts towards a more sustainable and equitable energy future.
+Feel free to reach me at rpk2133@columbia.edu or riopramudita@gmail.com
