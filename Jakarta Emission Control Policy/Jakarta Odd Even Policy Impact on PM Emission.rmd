@@ -1,0 +1,766 @@
+---
+title: 'Odd-Even Policy Evaluation on Particulate Matter in Jakarta'
+author: 'Ardhi Wardhana (arw2222), Faiz Philarette (fep2119), Rio Kaswiyanto (rpk2133)'
+date: '`r Sys.Date()`'
+output:
+  pdf_document:
+    toc: no
+    toc_depth: '3'
+    number_sections: yes
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+    number_sections: yes
+    highlight: tango
+    theme: default
+    fig_caption: yes
+    df_print: tibble
+urlcolor: blue
+header-includes:
+  - \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+options(knitr.table.format = "latex")
+```
+
+```{r, include = FALSE}
+library(tidyverse)
+library(weights)
+library(lmtest)
+library(sandwich)
+library(knitr)
+library(sf)
+library(readr)
+library(dplyr)
+library(fixest)
+library(stargazer)
+library(readxl)
+library(ggplot2)
+library(tidyr)
+library(raster)
+library(ncdf4)
+library(gridExtra)
+library(cowplot)
+library(modelsummary)
+```
+
+# Introduction
+
+In recent years, the air quality problem has become a persistent problem in DKI Jakarta. The air quality of the Indonesian capital has deteriorated, with the PM2.5 average concentration escalating to 49.4 `\mu`gram/m3 in 2019, which is about 66% higher than in 2017 (Zulkarnain et al, 2021). The deteriorating air quality imposes other problems on the nation's capital, as air pollution has been strongly linked to non-communicable diseases (NCDs), including cardiovascular and chronic respiratory diseases and lung cancers, which impose substantial burdens on the healthcare sector and the economy of the country (Syuhada et al, 2023). In 2019, Jakarta witnessed NCDs comprising 79% (equivalent to 36,000 deaths) of the overall mortality rate. The impact of air pollution in generating NCDs and premature fatalities extends to significant consequences, including the loss of productive labor, escalated healthcare expenses, a decline in the country's gross domestic product (GDP), decreased productivity and competitiveness of cities, and a deterioration in the overall quality of life for residents. Recent findings from the World Bank revealed that the annual cost of air pollution in Indonesia exceeded USD 220 billion in 2019, constituting 6.6% of the country's GDP (PPP).
+
+Motor vehicles have become the primary source of pollution in DKI Jakarta. In particular, the contribution of motor vehicles to the PM2.5 concentration of DKI Jakarta is approximately 32--57%. This is due to the rapid motorization of DKI Jakarta and its surrounding regions (Zulkarnain et al, 2021). The rapid motorization in DKI Jakarta itself is a problem that has existed for a long time, with the average annual growth rate of motorized vehicles reaching 9.5 percent in 2017. In 1994, the government introduced the 3-in-1 policy in an attempt to manage the congestion on many main roads in DKI Jakarta. One of the latest policies to be introduced, however, is the odd-even driving restrictions, a traffic management system enacted to curtail the travel of passenger cars on certain roads based on the vehicle license number. The odd-even policy was initially implemented during the 2018 Asian Games and only covered a small share of the main roads in Jakarta. Due to its perceived success, it was expanded by the end of the event as a permanent policy that covered the 9 main roads in DKI Jakarta. This policy is implemented in the rush hour window of 6AM-10AM and 5PM to 10PM. The rationale of the policy that only regulates the main roads is mainly because only around 20 percent of trips in Jakarta were made with public transportation, due in part to the lack of an integrated transportation system for commuters (JakPost, 2021). The odd-even regulation, again, was a success in terms of reducing congestion, as it again was expanded into 16 more main roads, which therefore made the policy covering 25 main roads in DKI Jakarta. However, the impact of the regulation on air quality remains in question, considering that there are many factors that affect air quality. This brought the policy question of this paper: how does Jakarta's odd-even traffic regulation policy affect the air quality?
+
+Several research studies have suggested that the implementation of transportation demand management (TDM) through restrictions on vehicle operations has demonstrated a reduction of pollutant emissions by over 50% (Bigazzi and Rouleau, 2017). New Delhi, for example, has already implemented the policy in 2016. The Energy Policy Institute at the University of Chicago, in collaboration with Evidence for Policy Design, conducted an analysis of the effects of the odd-even scheme implemented in 2016. The study revealed that during the hours when the scheme was enforced in January of that year, Delhi experienced a 14-16% decrease in PM2.5 levels. However, when the scheme was reintroduced in April of the same year, there was no discernible reduction in pollution. This paper aims to analyze in a similar way to what extent the odd-even policy could affect the air quality, which we will also measure in PM2.5 levels.
+
+The paper proceeds as follows. We begin by describing our data and present why they are  well suited to addressing the question of the odd-even policy effect on the air quality in DKI Jakarta. We then discuss our econometric model and describe in detail the various instruments we use to address measurement errors. After we present our main results and explore variations in our model assumptions, we discuss the implications of our findings.
+
+# Background
+
+The odd-even policy that we observed in this paper is the difference between the odd-even policy in its initial expansion after the Asian Games in 2018 and being enforced in December 2019, which covered 9 main streets in DKI Jakarta, and the second expansion in September 2019, which added 16 more streets being implemented the odd-even policy, thus bring in total 25 streets covered by the policy. We refer to the DKI Jakarta Governor's Regulation number 155-2018 and the DKI Jakarta Governor's Regulation number 88-2019. We observed the change in these 2 time points, thus observing the monthly road data from April 2018 until March 2020.
+
+We used the odd-even policy as a treatment group in our paper, as we wanted to observe the effect of the policy on our pollution. In choosing our controlled group, we looked for roads with similarities to the roads in the controlled group. Due to the limited availability of data on traffic and exact origin-destination data, we used Jakarta's bus rapid transit (BRT) system route as our proxy. Jakarta's BRT amounted to 15 million monthly passengers, with coverage of 85% of DKI Jakarta, serving as one of the biggest commuting services in DKI Jakarta. One of the features of the BRT is the route is parallel with the most crowded roads in Jakarta, therefore serving as a direct transportation alternative to private vehicles. We proceeded to overlay the overlapping BRT routes with the main roads in Jakarta, and the initial visualization showed that it aligns with the roads that implement the odd-even policy. Therefore, we used the roads that overlap with the BRT route as the controlled roads in this research.
+
+![Controlled Roads](../Graph/control.png){width="50%"} ![Treatment, or the odd-even policy roads](../Graph/gage.png){width="50%"} ![Overlay between the controlled and treatment roads](../Graph/overlay.png){width="50%"}
+
+# Data
+
+## Particulate Matter 2.5
+
+The PM 2.5 data was obtained from the \href{https://pubs.acs.org/doi/full/10.1021/acs.est.1c05309}{Van Donkelaar monthly average of global particulate matter (2021)}. This data is generated using satellite observation which has been calibrated using actual ground level measurement, and modeled to to fill if there is any gap. The observation unit of this data is coordinate grid with size of 0.01 x 0.01 degree, which roughly equals to 1.1 x 1.1 km in Jakarta region. Ideally, there are 1,113 satellite coordinate observations for every month across Jakarta region, however in some cases when the cloud was thick enough to prevent the satellite to measure, the data will be null. Some monthly data are presented below.
+
+
+```{r, include = FALSE}
+# Read the Jakarta administrative boundary from the GeoPackage file using sf
+jakarta_gpkg <- st_read("../Data Set/Kabupaten-DKI-Jakarta.gpkg")
+jakarta_gpkg <- jakarta_gpkg %>%
+  filter(name != "Kepulauan Seribu")
+
+# Specify the bounding box coordinates
+jakarta_bbox <- c(xmin = 106.65, xmax = 107, ymin = -6.4, ymax = -6.05)
+```
+
+```{r}
+load("../Data Set/PM/pollution_all.RData")
+pollution_all <- combined_df
+
+# Define custom color gradient
+custom_colors <- c("#0505ff", "#ab00b4", "#de216c", "#ff4314")
+
+# Define a function to generate plots for each month and year
+plot_pm25_levels <- function(Year, Month) {
+  pollution_all_month <- pollution_all %>% 
+    filter(year == as.character(Year), month == as.character(Month))
+  
+  combined_sf_month <- st_as_sf(pollution_all_month, coords = c("x", "y"), crs = st_crs(jakarta_gpkg))
+  
+  # Plot the Jakarta map
+  ggplot() +
+    geom_sf(data = jakarta_gpkg, fill = "black", color = "green")  + 
+    geom_sf(data = combined_sf_month, aes(color = pm2.5), size = 0.2, na.rm = TRUE) +
+    scale_color_gradient(name = "PM 2.5", low = custom_colors[1], high = custom_colors[4], limits = c(10, 40), na.value = "grey") +
+    labs(title = paste(format(as.Date(paste(Year, Month, "01", sep = "-")), "%B %Y")), size = 0.6) +
+    theme_minimal() +
+    coord_sf(xlim = c(jakarta_bbox["xmin"], jakarta_bbox["xmax"]), 
+             ylim = c(jakarta_bbox["ymin"], jakarta_bbox["ymax"]),
+             datum = NA) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    guides(color = FALSE)
+}
+
+legend_plot <- plot_pm25_levels(2018, 1) + 
+  guides(color = guide_legend(override.aes = list(size = 4)))
+legend_only <- get_legend(legend_plot)
+
+grid.arrange(
+  plot_pm25_levels(2018, 1),
+  plot_pm25_levels(2018, 8),
+  legend_only,
+  ncol = 3
+)
+
+```
+
+## Road
+
+The road data were obtained from the \href{https://openstreetmap.or.id/en/dki-jakarta/}{Open Street Map}. The road data were then analyzed using the ArcGIS app, to assign a dummy value to signify which road that implement the odd-even policy, which would be our treatment road. The control roads were assigned to identify other roads with similar traffic load as the comparison. This research uses primary roads that contain bus rapid transportation (BRT) system route as the control roads, because these roads should have similar characteristic as the treatment roads.
+
+There are 9 road groups that implement the odd-even policy (`1_hayam_wuruk` to `9_salemba`), while there is one group of roads which do not implement the odd-even policy as the control (`0_not_gage`). The location of each road can be seen in the Background chapter.
+
+## Rainfall
+
+Rainfall was obtained from \href{https://jakarta.bps.go.id/indicator/151/373/1/curah-hujan-di-stasiun-kemayoran-menurut-bulan.html}{Badan Pusat Statistik (BPS) Jakarta Province}. This data is the result of observation of Kemayoran weather station. Rain can influence how long particulate matter emission can float in the air. Increasing rainfall should be correlated to lower particulate matter level. Rainfall as shown in the graph below (red line), has annual seasonality characteristic, which tend to be high in the earlier of the year (January - March) during the rainy season in Jakarta.
+
+```{r}
+# Read the Excel file
+rainfall <- read_excel("../Data Set/rainfall.xlsx") %>% 
+  mutate(rainfall = as.numeric(rainfall))
+
+# Calculate monthly averages
+monthly_rainfall <- rainfall %>%
+  group_by(month) %>%
+  summarise(rainfall = mean(rainfall, na.rm = TRUE)) %>% 
+  mutate(year = "Overall Average") %>% 
+  dplyr::select(year, month, rainfall)
+
+# Rbind the two df
+rain_seasonality <- rbind(rainfall, monthly_rainfall)
+
+# Color
+grey_palette <- c("#DCDCDC")
+year_colors <- setNames(rep(grey_palette, length.out = 22), as.character(2018:2021))
+year_colors["Overall Average"] <- "red"
+
+# Plot the graph
+ggplot(rain_seasonality, aes(x = as.factor(month), 
+                             y = rainfall, 
+                             group = interaction(year, as.factor(year)),
+                             color = as.factor(year))) +
+  geom_line(size = 1.2) +
+  scale_color_manual(values = year_colors) +
+  labs(title = expression("Monthly Rainfall Seasonality in 2018 to 2021 Period"),
+       x = "Month",
+       y = "Rainafall rate (mm)",
+       color = "Year") +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 8),
+    plot.title = element_text(face = "bold", size = 14),
+    axis.title = element_text(face = "bold", size = 10),
+    panel.grid.major = element_line(size = 0.2, color = "gray90"),
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    legend.key = element_blank()
+  )
+```
+
+## Holidays
+
+Holidays data was obtained from \href{https://setkab.go.id/inilah-hari-libur-nasional-dan-cuti-bersama-tahun-2018/}{Indonesian Cabinet Secretary office website} and \href{https://www.kominfo.go.id/content/detail/15343/inilah-hari-libur-dan-cuti-bersama-tahun-2019/0/berita}{Indonesian Communication and Information Ministry website}. This data shows various national holidays that happened and impacted the odd even policy in Indonesia. There is one particular holiday which impact differently, which is the Eid Al-Fitr holiday, because this holiday is particularly lengthy and Jakarta population will go "mudik" or going to their hometown, which usually located in smaller city throughout Indonesia. Therefore, Eid Al-Fitr holiday, instead of increasing traffic in Jakarta, this holiday would reduce traffic significantly. The distribution of the holidays across period of interest can be seen in the table below.
+
+```{r}
+# Adding the holidays and mudik
+holidays <- read.csv(file="../Data Set/holidays.csv", header=TRUE) %>% 
+  mutate( month = as.factor(month),
+          year = as.factor(year))
+kable(holidays, format = "latex", booktabs = TRUE, caption = "Distribution of Mudik and Holidays across Period of Interest")
+```
+
+# Exploratory Data Analysis
+
+## Seasonality Effect on Pollution
+
+```{r}
+pollution_all$month <- as.factor(pollution_all$month)
+pollution_all$x <- as.factor(pollution_all$x)
+pollution_all$y <- as.factor(pollution_all$y)
+
+# Calculate overall average PM2.5 for each month and year
+overall_avg <- pollution_all %>%
+  dplyr::group_by(year, month) %>%
+  dplyr::summarize(Monthly_Avg_PM25 = mean(pm2.5, na.rm = TRUE))
+
+# Calculate overall average
+overall_avg_all <- overall_avg %>%
+  dplyr::group_by(month) %>%
+  dplyr::summarise(Monthly_Avg_PM25 = mean(Monthly_Avg_PM25, na.rm = TRUE)) %>% 
+  dplyr::mutate(year = as.factor("Monthly Average")) %>% 
+  dplyr::select(year, month, Monthly_Avg_PM25)
+
+overall_avg <- overall_avg %>% 
+  mutate(year = as.factor(year))
+
+# Concatenate the two datasets
+combined_avg <- rbind(overall_avg, overall_avg_all %>%
+                        mutate(year = "Overall Average"))
+
+# Create a vector of colors
+grey_palette <- c("#DCDCDC")
+year_colors <- setNames(rep(grey_palette, length.out = 22), as.character(2000:2021))
+year_colors["Overall Average"] <- "red"
+
+ggplot(combined_avg, aes(x = as.factor(month), y = Monthly_Avg_PM25,
+                                            group = interaction(year, as.factor(year)),
+                                            color = as.factor(year))) +
+  geom_line(size = 1.2) +
+  scale_color_manual(values = year_colors) +
+  labs(title = expression("Seasonality in Monthly PM"[2.5]*" for 2000 to 2021 Period"),
+       x = "Month",
+       y = expression(PM[2.5]*" (\\mu g/m³)"),
+       color = "Year") +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 8),
+    plot.title = element_text(face = "bold", size = 14),
+    axis.title = element_text(face = "bold", size = 10),
+    panel.grid.major = element_line(size = 0.2, color = "gray90"),
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    legend.key = element_blank()  # Remove legend for grey colors
+  )
+
+```
+
+```{r}
+pollution_all$year <- as.factor(pollution_all$year)
+
+rainfall <- rainfall %>% 
+  mutate(month = as.factor(month),
+         year = as.factor(year))
+pollution_all_rain <- left_join(pollution_all, rainfall, 
+                                by = c("year", "month"))
+
+# Filter to only consider Januari 2018 until March 2020
+filtered_data <- pollution_all_rain %>%
+  mutate(date = make_date(as.numeric(as.character(year)), as.numeric(as.character(month)), 1)) %>%
+  filter(date >= make_date(2018, 1, 1) & date <= make_date(2020, 3, 31))
+
+filtered_data <- left_join(filtered_data, holidays,
+                           by = c("month", "year"))
+
+
+EDA2_month <- lm(pm2.5 ~ month, data = filtered_data)
+robust_se_values_EDA2 <- sqrt(diag(vcovHC(EDA2_month, type = "HC1")))
+
+EDA2_month_year <- lm(pm2.5 ~ month*year, data = filtered_data)
+robust_se_values_EDA2b <- sqrt(diag(vcovHC(EDA2_month_year, type = "HC1")))
+summary_eda2b <- summary(EDA2_month_year)
+
+EDA2_month_year_rain <- lm(pm2.5 ~ month*year + rainfall , data = filtered_data)
+robust_se_values_EDA2c <- sqrt(diag(vcovHC(EDA2_month_year_rain, type = "HC1")))
+summary_eda2c <- summary(EDA2_month_year_rain)
+
+```
+
+In addition to rainfall, as discussed in the previous chapter, the level of particulate matter is also influenced by another weather event, such as wind and humidity. However, due to the limitation of usable data, month fix effect is used instead. This approach should still be acceptable since most of the weather characteristics are periodic annually. This assumption is proven by statistically significant regression of the month as a dummy variable (and rainfall) with robust standard error. The seasonality can also be identified in the graph below. This regression results in an adjusted R-squared of 0.835, which quite significant.
+
+```{r, results='asis'}
+models <- list(EDA2_month, EDA2_month_year, EDA2_month_year_rain)
+
+# Create a data frame for additional rows with four columns, one for each model
+additional_rows <- data.frame(
+  `Model 1` = c("Yes", "No", "No"),
+  `Model 2` = c("Yes", "Yes", "No"),
+  `Model 3` = c("Yes", "Yes", "Yes"),
+  row.names = c("Month (Dummy)", "Month x Year (Dummy)", "Rainfall")
+)
+
+modelsummary(models,
+             output = "markdown",
+             title = "Regression Results of Controlling Seasonality and Holidays",
+             stars = TRUE,  # Include significance stars
+             notes = c("Robust standard errors are used"),
+             single.row = TRUE
+             )
+```
+
+## Near Analysis
+
+This research main interest is to evaluate road level policy implementation, however, since the pollution data uses coordinate observation unit, each grid is assigned to the nearest road. This assignment was done through Near Analysis geoprocessing in the ArcGIS software. This analysis resulted in the nearest distance from all observation coordinates to the selected roads.
+
+Each observation coordinate is assigned with the nearest road and should be less than 1,000 meters from it. This analysis can also be imagined as identifying coordinates which located within 1,000 m buffer area from the roads. If the distance from the nearest road is more than 1,000 meter, there will be no road assignment, and will be given null value. The distribution of road to grid assignment is not equal, as shown in the table below. From 1,113 observations, there are 888 coordinates which are located more than 1,000 meters from any roads of interest.
+
+```{r}
+near_analysis <- read.csv("../Data Set/Near Analysis/Near_Analysis.csv")
+near_analysis$x <- as.factor(near_analysis$x)
+near_analysis$y <- as.factor(near_analysis$y)
+
+# Finding the minimum distance for each observation and the corresponding district
+dist_columns <- near_analysis[, grepl("dist_", names(near_analysis))]
+min_dist <- apply(dist_columns, 1, min)
+nearest_dist_index <- apply(dist_columns, 1, which.min)
+near_analysis$nearest_dist <- names(dist_columns)[nearest_dist_index]
+near_analysis$min_dist <- min_dist
+
+# Create a named vector for each road
+name_replacement <- c(
+  dist_1 = "1_gajah_mada",
+  dist_2 = "2_sudirman",
+  dist_3 = "3_fatmawati",
+  dist_4 = "4_tomang",
+  dist_5 = "5_gatsu_haryono",
+  dist_6 = "6_rasuna_said",
+  dist_7 = "7_ahmad_yani",
+  dist_8 = "8_pramuka",
+  dist_9 = "9_salemba",
+  dist_0 = "0_not_gage"
+)
+
+# Replace the names in the nearest_dist column
+near_analysis <- near_analysis %>%
+  mutate(nearest_dist = name_replacement[nearest_dist])
+
+# Create the nearest_road column with conditional assignment
+near_analysis$nearest_road <- ifelse(near_analysis$min_dist < 1000, near_analysis$nearest_dist, NA)
+near_analysis$nearest_road <- as.factor(near_analysis$nearest_road)
+
+# Using kable for the table
+table1 <- near_analysis %>%
+  count(nearest_road)
+# Use knitr::kable() for the table in PDF
+kable(table1, format = "latex", booktabs = TRUE, caption = "Distribution of Coordinates to the Nearest Roads")
+```
+
+# Empirical Strategy
+
+The odd-even policy motivates a straightforward fixed effect strategy that estimates the causal effect of the policy and street pollution, comparing average levels of air pollution across months-year. The estimation equation is
+
+$$
+\small Y_{pm} = \beta_{1} S_{st}  + \mu_{s} + \tau_t + \varepsilon_{st}
+$$
+
+where $\small Y_{pm}$ is the outcome of interest or the level of PM 2.5 in raster observed by road $\_{s}$ and time $\_t$; $\small S\_{st}$ is a binary variable indicating treatment status (the odd-even policy), the road that implemented the policy becomes the treatment group, while the control group is the street that never implements the policy but still on a same level of characteristic. The coefficient of interest is $\beta\_{1}$, which represents the average treatment effect between streets imposed with the odd-even policy and not. $\mu\_s$ represents street fixed effects that control for time-invariant shocks common to all streets; $\tau\*t\*$ represents month-year fixed effects that control for time-varying shocks common to all streets, and $\varepsilon{st}$ is an idiosyncratic error term.
+
+These estimates may still have a bias from the difference in time when the policy was imposed because some roads implemented the policy in August 2018, and the rest implemented the policy in September 2019. This bias might threaten internal validity and affect the conclusion. The event study research design can minimize this threat because it estimates month by month effects relative to a base period (Goodman-Bacon, 2018). Fo the next step, this study incorporates event study into the estimation equation below.
+
+$$
+\tiny Y_{st} = 1\{\text{Odd-Even}\}[\sum_{y=-6}^{-2}\beta_{\text{pre}}\{t - t_s = y\} + \sum_{y=0}^{6}\beta_{\text{post}}\{t - t_s = y\}] + \mu_s + \tau_t + \varepsilon_{st}
+$$
+
+In the event study design, 1{Odd Even Policy} is a binary variable identifying if a street is applied the odd-even policy, and $t_s$ is the month the policy was implemented. The coefficients of interest are now $\beta_{pre}$ and $\beta_{post}$, which measure the effect between the PM2.5 level and the odd-even policy in each of the 6 months leading up to the policy and 6 months after.
+
+```{r, include=FALSE}
+# Calculate residuals
+filtered_data_res <- filtered_data %>%
+  mutate(residuals = resid(EDA2_month_year_rain))
+
+road_panel_data_temp <- left_join(filtered_data_res, near_analysis, by = c("x", "y"))
+road_panel_data <- road_panel_data_temp %>% 
+  dplyr::select(-OID_, -fid_1, -fid_2, -fid_3, -fid_4, -fid_5, 
+                -fid_6, -fid_7, -fid_8, -fid_9, -fid_0,
+                -ang_1, -ang_2, -ang_3, -ang_4, -ang_5, 
+                -ang_6, -ang_7, -ang_8, -ang_9, -ang_0) %>% 
+    filter(!is.na (nearest_road))
+
+prog_data <- road_panel_data %>%
+  dplyr::select(x, y, year, month, pm2.5, nearest_road, 
+                min_dist, rainfall, residuals, no_working_days, 
+                mudik, date, dist_1, dist_2, dist_3, dist_4, dist_5,
+                dist_6, dist_7, dist_8, dist_9, dist_0) %>% 
+  filter(!is.na(nearest_road)) %>% 
+  mutate(gage = ifelse(nearest_road == "0_not_gage", 0, 1),
+         year_gage = case_when(nearest_road == "1_gajah_mada" ~ 2019,
+                               nearest_road == "2_sudirman" ~ 2018,
+                               nearest_road == "3_fatmawati" ~ 2019,
+                               nearest_road == "4_tomang" ~ 2019,
+                               nearest_road == "5_gatsu_haryono" ~ 2018,
+                               nearest_road == "6_rasuna_said" ~ 2018,
+                               nearest_road == "7_ahmad_yani" ~ 2018,
+                               nearest_road == "8_pramuka" ~ 2019,
+                               nearest_road == "9_salemba" ~ 2019,
+                               nearest_road == "0_not_gage" ~ 0,
+                              TRUE ~ NA_integer_),
+         month_gage = case_when(nearest_road == "1_gajah_mada" ~ 9,
+                                nearest_road == "2_sudirman" ~ 8,
+                                nearest_road == "3_fatmawati" ~ 9,
+                                nearest_road == "4_tomang" ~ 9,
+                                nearest_road == "5_gatsu_haryono" ~ 8,
+                                nearest_road == "6_rasuna_said" ~ 8,
+                                nearest_road == "7_ahmad_yani" ~ 8,
+                                nearest_road == "8_pramuka" ~ 9,
+                                nearest_road == "9_salemba" ~ 9,
+                                nearest_road == "0_not_gage" ~ 0,
+                               TRUE ~ NA_integer_),
+         od = ifelse (gage == 0, "No Odd-even", "Odd-even")
+         )
+
+# Assign event study time for control group
+control_obs <- prog_data %>% 
+  filter(nearest_road == "0_not_gage") %>% 
+  filter(date >= make_date(2018, 3, 1) & date <= make_date(2020, 3, 31)) %>% 
+  mutate(year_gage = ifelse(year == 2018, 2018, 2019),
+         month_gage = ifelse(year_gage == 2018, 8, 9),
+         year_dif = as.integer(year) - as.integer(year_gage) + 1999,
+         month_dif = as.integer(month) - as.integer(month_gage),
+         tot_month_dif = year_dif * 12 + month_dif)
+# Assign event study time for treatment group
+treat_obs <- prog_data %>% 
+  filter(!nearest_road == "0_not_gage") %>% 
+  filter(date >= make_date(2018, 3, 1) & date <= make_date(2020, 3, 31)) %>% 
+  mutate(
+    year_dif = as.integer(year) - as.integer(year_gage) + 1999, 
+    month_dif = as.integer(month) - as.integer(month_gage),
+    tot_month_dif = year_dif * 12 + month_dif
+  )
+
+# Bind the control and treatment
+combined_data <- bind_rows(control_obs, treat_obs)
+# Filter month difference
+event_data <- combined_data %>% 
+  filter(tot_month_dif < 7,
+         tot_month_dif > -7) %>% 
+  mutate(od = ifelse(gage == 1, "Odd-even", "No Odd-even"),
+         log_pm2.5 = log(pm2.5))
+
+
+# Convert y$year to numeric
+rainfall$year <- as.factor(rainfall$year)
+event_data$month <- as.factor(as.character(event_data$month))
+
+# Perform the left join
+event_data <- left_join(event_data, rainfall, by = c("year", "month"))
+
+event_data <- event_data %>% 
+  mutate(rainfall = as.numeric(rainfall.y)) %>% 
+  dplyr::select(-rainfall.x, -rainfall.y)
+
+# Check for NAs in 'rainfall' and replace them with 0 if needed
+event_data$rainfall[is.na(event_data$rainfall)] <- 0
+
+# Convert 'rainfall' to numeric
+event_data$rainfall <- as.numeric(event_data$rainfall)
+
+```
+
+## Difference in the Control and Treatment Group
+
+```{r}
+# Adding the road width
+road_width <- read.csv(file="../Data Set/status_ruas_jalan.csv", sep=";", header=TRUE) %>% 
+  mutate(nearest_road = as.factor(nearest_road)) %>% 
+  dplyr::select(-year_gage, -route, -road)
+
+combined_data2 <- left_join(combined_data, road_width, by = "nearest_road") %>% 
+  mutate(gage = as.factor(gage))
+
+road_panel_data_month_pm <- combined_data2 %>%
+  group_by(gage, date) %>% 
+  mutate(pm2.5 = mean(pm2.5))
+```
+
+Residuals is used for this analysis as a method to control the seasonality effect based on previous analysis. Intuitively, this panel data shows that most of the observed month, road that subject to odd even policy, have higher unexplained pollution (residuals). The difference are not very clear between the two groups in the scatter plot below. The regression table proves that even though the treatment group has higher unexplained pollution, the difference decreases after the policy is implemented. This might be an indicator which shows the policy is successful in decreasing the pollution in the observed grid. However, since the implementation of the policy happened in two different time, an event study approach needs to be implemented. Two dashed lines represent two periods when the policy was implemented. Once in June 2018 and the other in September 2019.
+
+```{r}
+combined_data3 <- combined_data2 %>% 
+  filter(date <= make_date(2018, 7, 31))
+
+combined_data4 <- combined_data2 %>% 
+  filter(date >= make_date(2018, 7, 31) & date <= make_date(2019, 9, 1))
+
+combined_data5 <- combined_data2 %>% 
+  filter(date >= make_date(2019, 9, 1))
+
+combined_data6 <- combined_data2 %>% 
+  mutate(period_group = case_when(
+    date <= as.Date("2018-07-31") ~ "Before",
+    date >= as.Date("2019-09-01") ~ "After",
+    TRUE ~ "Transition"
+  )) %>% 
+  group_by(date, od) %>% 
+  summarise(residuals = mean(residuals),
+            date = date)
+
+ggplot(combined_data2, aes(x = date, y = residuals, color = od)) +
+  geom_point(alpha = 0.1) +
+  geom_line(data = combined_data6, aes(group = od), size = 1.2) +
+  geom_point(data = combined_data6, aes(group = od), color = "black", size = 2) +
+  theme_minimal() +
+  labs(
+    title = "Scatter Plot of Residuals Over Time",
+    x = "Date",
+    y = "Residuals"
+  ) +
+  geom_vline(xintercept = as.Date("2018-07-01"), linetype = "dashed", color = "black") +
+  geom_vline(xintercept = as.Date("2019-09-01"), linetype = "dashed", color = "black") +
+  coord_cartesian(ylim = c(-3, 7)) +
+  scale_x_date(date_breaks = "2 months", date_labels = "%b %Y") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+```{r, results='asis'}
+# Fit your models
+EDA4 <- lm(residuals ~ gage, 
+           data = combined_data3)
+EDA5 <- lm(residuals ~ gage, 
+           data = combined_data4)
+EDA6 <- lm(residuals ~ gage, 
+           data = combined_data5)
+
+# Create a list of models
+models <- list(EDA4, EDA6)
+
+# Custom model names
+model_names <- c("Before", "After")
+
+# Specify the robust standard errors
+vcov <- list(vcovHC(EDA4, type = "HC1"), 
+             vcovHC(EDA6, type = "HC1"))
+
+additional_rows <- data.frame(
+  `Term` = c("Before Policy", "After Policy"),
+  `Model 1` = c("Yes", "No"),
+  `Model 2` = c("No",  "Yes")
+)
+
+# Use modelsummary with coef_map
+modelsummary(models,
+             output = "markdown",
+             title = "Control and Treatment Difference Before and After Policy",
+             stars = TRUE, 
+             notes = c("Robust standard errors are used"),
+             single.row = TRUE,
+             vcov = list(vcovHC(EDA4, type = "HC1"), 
+                         vcovHC(EDA6, type = "HC1")),
+             add_rows = additional_rows,
+             coef_map = "gage1"
+)
+```
+
+## Event Study - Two Way Fixed Effect
+
+Before the event study approach, this study estimates the effect of the odd-even policy in the table column (1). The coefficient shows that the policy reduces the PM2.5 by 1.5 $\mu$gram/m3, on average, compared to the road that did not implement the policy. After the event study was conducted, the coefficient in column (2) got larger compared to the previous estimate. This shows average PM2.5 decreases by 1.9 $\mu$gram/m3 in the Odd-even road. This is because the event study minimizes the effect of unexpected factors between the first implementation of the policy in August 2018 and September 2019 that might reduce the magnitude of the policy. Finally, rainfall is incorporated because this variable should have a high correlation with PM2.5. However, column (3) shows that rainfall does not have a high impact on pollution, and it is indicated by the coefficient of OD that does not change.
+
+```{r include=FALSE}
+fe0 <- feols(
+  pm2.5 ~ od + nearest_road + month*year,
+  data = prog_data
+)
+
+res_fe0 <- coeftest(fe0, vcov = vcovHC(fe0, type = "HC1"))
+```
+
+```{r include=FALSE}
+#Event Study without rainfall
+fe1 <- feols(
+  pm2.5 ~ od + tot_month_dif + nearest_road + month*year,
+  data = event_data
+)
+
+res_fe1 <- coeftest(fe1, vcov = vcovHC(fe1, type = "HC1"))
+```
+
+```{r include=FALSE}
+#Event Study with rainfall
+fe2 <- feols(
+  pm2.5 ~ od + tot_month_dif + nearest_road + month*year + rainfall,
+  data = event_data
+)
+
+res_fe2 <- coeftest(fe2, vcov = vcovHC(fe2, type = "HC1"))
+```
+
+```{r include=FALSE}
+fe3 <- feols(
+  pm2.5 ~ i(factor(tot_month_dif), gage, ref = -1) + nearest_road + month*year + rainfall,
+  data = event_data
+)
+res_fe3 <- coeftest(fe3, vcov = vcovHC(fe3, type = "HC1"))
+```
+
+```{r, results = 'asis'}
+# Assuming res_fe0, res_fe1, res_fe2 are the results from your regression models
+models <- list(res_fe0, res_fe1, res_fe2)
+
+# Create a data frame for additional rows with four columns (one for each model + row names)
+additional_rows <- data.frame(
+  `Term` = c("Gage as explanatory variable", "Event Study OD", "Rainfall FE", "Month x Year FE", "Road FE"),
+  `Model 1` = c("Yes", "No", "No", "Yes", "Yes"),
+  `Model 2` = c("Yes", "Yes", "No", "Yes", "Yes"),
+  `Model 3` = c("Yes", "Yes", "Yes", "Yes", "Yes")
+)
+
+modelsummary(models,
+             output = "markdown",
+             title = "Regression Results",
+             stars = TRUE,  # Include significance stars
+             notes = c("Robust standard errors are used"),
+             single.row = TRUE,
+             add_rows = additional_rows,
+             coef_map = c("odOdd-even", "tot_month_dif", "rainfall")
+
+)
+```
+
+The result of two way fixed effect using an event study is shown in the chart below. The plot shows that the average PM2.5 decreased on the road where the policy was implemented. However, a month later, the pollution went back to the trend before the policy. Even though the coefficient of Odd-event from the table above indicates that the average pollution was reduced due to the policy, the behavior of monthly pollution bounced back a month after the policy.
+
+
+
+```{r echo=FALSE}
+# Plot event study
+iplot(
+  fe3,
+  pt.join = TRUE,
+  ci.join = TRUE,
+  ci.lwd = 0,
+  grid.par = list(vert = FALSE),
+  drop = c("-6", "6"),
+  main = "Pollution and Odd-even Policy",
+  ylab = "Pollution PM 2.5",
+  xlab = "Months since Odd-even Policy implementation"
+)
+```
+
+The plot of pollution residuals below also aligns with the finding of "bounce back." This panel data shows that the unexplained pollution (residuals) on the treated road was reduced after the policy was implemented. This behavior was followed by the bounce back a month after the policy.
+
+```{r echo=FALSE}
+# Data summary
+summary_data <- event_data %>%
+  group_by(tot_month_dif, od) %>%
+  summarise(
+    residuals = mean(residuals),
+    se_pm = sd(pm2.5))
+  
+# Plotting geombar
+ggplot(summary_data, aes(x = as.factor(tot_month_dif), y = residuals, group = od, color = factor(od))) +
+  geom_point(data = event_data, size = 1, alpha = 0.1,  aes(x = as.factor(tot_month_dif), 
+                                                 y = residuals, 
+                                                 group = od, 
+                                                 color = od)) +
+  geom_point(data = summary_data, aes(group = od), color = "black", size = 2) +
+  geom_vline(xintercept = as.factor(-1), linetype = "dashed", color = "black") +
+  geom_line(aes(group = od), size = 1.2) +
+  labs(
+    x = "Months Since Odd-Even Policy",
+    y = "Residuals"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.title = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(size = 0.1, color = "black"),
+    axis.text.x = element_text(angle = 90, hjust = 1)) +
+  coord_cartesian(ylim = c(-2, 3))
+```
+
+# Discussion
+
+## Policy Implication
+
+This research found that the odd-even policy is statistically significant in terms of reducing air pollution, controlling the month-year, rainfall, roads, and the event study. However, the 1.9 coefficient means that the policy does not reduce the PM 2.5 level to a high degree, which means the pollution level reduction of the policy is low. However, it is still an effective policy to reduce air pollution, given the statistically significant result. This implies that if there are no other policy alternatives to reduce air pollution in the region, the expansion of this policy to other major or crowded roads should be considered. Another reason for the odd-even policy expansion is the significant result that the observed roads in the controlled roads, in which there is no implementation of the policy, have higher PM 2.5 levels compared to the treatment roads. Assuming that the exposure to pollution is the same between the control and treatment roads, the implementation of the odd-even policy in the control roads would have benefitted the population that lives nearby.
+
+Another significant policy implication is the result of the event study. The result of the event study shows that the most significant reduction in PM 2.5 level was only in the first month after the policy was implemented. While the overall trend after the policy implementation still shows a pollution reduction, it is not as high as the reduction in the first month. There are a few possibilities for why the reduction in the first month is the largest one. First, it is regarding the enforcement issues. As with any other regulation that passed in the region, the initial implementation always met with tight enforcement. This yields the pollution reduction that is expected by the policy. However, after some time, it is often that the enforcement becomes much more loose. This is also the possible explanation for the case in New Delhi, where the University of Chicago research team measured the PM 2.5 level for the odd-even policy, and found that during the first month of the implementation it decreased by 14%-16%, but no significant reduction in the reinstatement. Another possibility is that the people adapted to the policy, either by switching to a motorcycle, as it is not regulated by the odd-even policy, or by buying another car with a different plate number. The latter, for one, could be explained in further research as this study does not observe the actual number of cars on the road with the odd-even policy implementation. 
+
+The government also need take into consideration the cost of the policy, as the odd-even restrictions on some roads limit the mobility of the people, which, given that little transportation option is available, could potentially harm the economic activities of the city. While the debacle between the cost of limiting mobility and traffic congestion remains, the implication of the policy is clear. The higher PM 2.5 levels in control roads, which are parallel to the BRT route signify that the effect of public transport provision on the air quality is still low. Expansion of the public transportation system is needed to compensate for the limitation of mobility, should the government decide to expand the odd-even policy to other major roads. 
+
+It should also be noted that there are no differences between the PM 2.5 level of the observation whether the distance to the road is near or far within the distance of 1000m. This means that the travel speed of PM 2.5 is high, therefore the benefit of the odd-even policy should be a citywide benefit instead of only benefitting the people that live near the road that implement the policy.
+
+# Conclusion
+
+This study reinforces the argument that restrictions on vehicle operations have demonstrated a reduction of pollutant emissions (Bigazzi and Rouleau, 2017). The odd-even policy in DKI Jakarta did managed to reduce the PM 2.5 level, albeit only in a small scale. The results also consistent with the New Delhi case, which shows strongest effect in its first month of implementation. It reflects the issues of enforcement of the implementation, also the possibility of adaptation to the regulation by the road users that reduce the efficacy of the policy, such as by switching to motorcycles or buying another car with different plate number. Finally, the policy is relevant to be expanded, considering limited alternatives to reduce air pollution in DKI Jakarta.
+
+# Reference
+
+Bigazzi, A., Rouleau, M. (2017).  Can traffic management strategies improve urban air quality? A review of the evidence. Journal of Transport & Health, p. 111-124, <https://doi.org/10.1016/j.jth.2017.08.001>.
+
+Goodman-Bacon, A., (2018). "Public Insurance and Mortality: Evidence from Medicaid Implementation," Journal of Political Economy, University of Chicago Press, vol. 126(1), pages 216-262. DOI: 10.1086/695528
+
+Syuhada G, Akbar A, Hardiawan D, Pun V, Darmawan A, Heryati SHA, Siregar AYM, Kusuma RR, Driejana R, Ingole V, Kass D, Mehta S. (2023).  Impacts of Air Pollution on Health and Cost of Illness in Jakarta, Indonesia. Int J Environ Res Public Health. Feb 7;20(4):2916. doi: 10.3390/ijerph20042916. 
+
+Zulkarnain, A.G., (2021). Impact of odd-even driving restrictions on air quality in Jakarta. International Journal of Technology. Volume 12(5), pp. 925-934
+
+Is Delhi's odd-even scheme to battle air pollution even effective? (2023). Energy Policy Institute at the University of Chicago. <https://epic.uchicago.edu/news/is-delhis-odd-even-scheme-to-battle-air-pollution-even-effective/>
+
+What you need to know about Jakarta's odd-even traffic policy. (2023). The Jakarta Post. <https://www.thejakartapost.com/news/2018/04/23/what-you-need-to-know-about-jakartas-odd-even-traffic-policy.html>
+
+# Map Appendix
+
+```{r, include = FALSE}
+# Read the Jakarta administrative boundary from the GeoPackage file using sf
+jakarta_gpkg <- st_read("../Data Set/Kabupaten-DKI-Jakarta.gpkg")
+jakarta_gpkg <- jakarta_gpkg %>%
+  filter(name != "Kepulauan Seribu")
+
+# Specify the bounding box coordinates
+jakarta_bbox <- c(xmin = 106.65, xmax = 107, ymin = -6.4, ymax = -6.05)
+
+load("../Data Set/PM/pollution_all.RData")
+pollution_all <- combined_df
+```
+
+```{r}
+# Define custom color gradient
+custom_colors <- c("#0505ff", "#ab00b4", "#de216c", "#ff4314")
+
+# Define a function to generate plots for each month and year
+plot_pm25_levels <- function(Year, Month) {
+  pollution_all_month <- pollution_all %>% 
+    filter(year == as.character(Year), month == as.character(Month))
+  
+  combined_sf_month <- st_as_sf(pollution_all_month, coords = c("x", "y"), crs = st_crs(jakarta_gpkg))
+  
+  # Plot the Jakarta map
+  ggplot() +
+    geom_sf(data = jakarta_gpkg, fill = "black", color = "green")  + 
+    geom_sf(data = combined_sf_month, aes(color = pm2.5), size = 0.2, na.rm = TRUE) +
+    scale_color_gradient(name = "PM 2.5", low = custom_colors[1], high = custom_colors[4], limits = c(10, 40), na.value = "grey") +
+    labs(title = paste(format(as.Date(paste(Year, Month, "01", sep = "-")), "%B %Y")), size = 0.6) +
+    theme_minimal() +
+    coord_sf(xlim = c(jakarta_bbox["xmin"], jakarta_bbox["xmax"]), 
+             ylim = c(jakarta_bbox["ymin"], jakarta_bbox["ymax"]),
+             datum = NA) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    guides(color = FALSE)
+}
+
+legend_plot <- plot_pm25_levels(2018, 1) + 
+  guides(color = guide_legend(override.aes = list(size = 4)))
+legend_only <- get_legend(legend_plot)
+
+grid.arrange(
+  plot_pm25_levels(2018, 1),
+  plot_pm25_levels(2018, 2),
+  plot_pm25_levels(2018, 3),
+  plot_pm25_levels(2018, 4),
+  ncol = 2
+)
+
+grid.arrange(
+  plot_pm25_levels(2018, 5),
+  plot_pm25_levels(2018, 6),
+  plot_pm25_levels(2018, 7),
+  plot_pm25_levels(2018, 8),
+  ncol = 2
+)
+
+grid.arrange(
+  plot_pm25_levels(2018, 9),
+  plot_pm25_levels(2018, 10),
+  plot_pm25_levels(2018, 11),
+  plot_pm25_levels(2018, 12),
+  legend_only,
+  ncol = 2
+)
+
+```
